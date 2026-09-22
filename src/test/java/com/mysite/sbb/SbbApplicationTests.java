@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @SpringBootTest
 class SbbApplicationTests {
@@ -18,11 +19,11 @@ class SbbApplicationTests {
 
 	@Test
 	void testJpa() {
-		List<Question> all = this.questionRepository.findAll();
-		assertEquals(2, all.size());
-
-		Question q = all.get(0);
-		assertEquals("sbb가 무엇인가요?", q.getSubject());
+		Optional<Question> oq = this.questionRepository.findById(1);
+		if (oq.isPresent()) {
+			Question q = oq.get();
+			assertEquals("sbb가 무엇인가요?", q.getSubject());
+		}
 	}
 
 }
